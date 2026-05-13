@@ -310,6 +310,9 @@
 <div class="tab-bar">
   <button class="active" data-tab="adv">ADR Volume</button>
   <button data-tab="parity">Parity Advantage</button>
+  <button data-tab="floor">Floor Broker Volume</button>
+  <button data-tab="liquidity">Best Price Liquidity</button>
+  <button data-tab="mktshare">Intraday Mkt Share</button>
 </div>
 
 <!-- TAB 1: ADR Volume -->
@@ -357,6 +360,69 @@
       <div class="parity-legend">
         <span>Yesterday</span>
         <span>Average for Rest of Past Two Weeks</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3: Floor Broker Intraday Provide Volume -->
+<div class="tab-content" id="tab-floor">
+  <div class="subtitle">Floor Broker Intraday Provide Volume · Yesterday vs Average for Rest of Past Two Weeks</div>
+  <div class="parity-section">
+    <div class="parity-title">Floor Broker Intraday Provide Volume (ADRs)</div>
+    <div class="parity-tape">Tape A &amp; B</div>
+    <div class="parity-chart">
+      <div class="parity-header">
+        <span>Symbol</span>
+        <span>Yesterday</span>
+        <span>Average for Rest of Past Two Weeks</span>
+      </div>
+      <div id="floor-body"></div>
+      <div class="parity-legend">
+        <span>Yesterday</span>
+        <span>Average for Rest of Past Two Weeks</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: NYSE Share of Exchange Liquidity at Best Price -->
+<div class="tab-content" id="tab-liquidity">
+  <div class="subtitle">NYSE Share of Exchange Liquidity at Best Price · Yesterday vs Average for Rest of Past Two Weeks</div>
+  <div class="parity-section">
+    <div class="parity-title">NYSE Share of Exchange Liquidity at Best Price (ADRs)</div>
+    <div class="parity-tape">Tape A &amp; B</div>
+    <div class="parity-chart">
+      <div class="parity-header">
+        <span>Symbol</span>
+        <span>Yesterday</span>
+        <span>Average for Rest of Past Two Weeks</span>
+      </div>
+      <div id="liquidity-body"></div>
+      <div class="parity-legend">
+        <span>Yesterday</span>
+        <span>Average for Rest of Past Two Weeks</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 5: Intraday Exchange-Only Market Share -->
+<div class="tab-content" id="tab-mktshare">
+  <div class="subtitle">Intraday Exchange-Only Market Share (min 50,000 intraday volume) · ADRs</div>
+  <div class="parity-section">
+    <div class="parity-title">Intraday Exchange-Only Market Share (ADRs)</div>
+    <div class="parity-tape">Tape A · Min 50,000 intraday volume</div>
+    <div class="parity-chart">
+      <div class="parity-header">
+        <span>Symbol</span>
+        <span>Yesterday</span>
+        <span>Prev Intraday Mkt Shr</span>
+      </div>
+      <div id="mktshare-body"></div>
+      <div class="parity-legend">
+        <span>Yesterday</span>
+        <span>Prev Intraday Mkt Shr</span>
       </div>
     </div>
   </div>
@@ -728,6 +794,102 @@ function renderParity() {
 }
 
 renderParity();
+
+/* ── Floor Broker Intraday Provide Volume (Tab 3) ── */
+const floorData = [
+  { symbol: 'ASX',  tape: 'A', yesterday: 30544, avg: 16790 },
+  { symbol: 'UMC',  tape: 'A', yesterday: 28452, avg: 18089 },
+  { symbol: 'NVO',  tape: 'A', yesterday: 22182, avg: 14658 },
+  { symbol: 'SE',   tape: 'A', yesterday: 20716, avg: 25917 },
+  { symbol: 'TEVA', tape: 'A', yesterday: 19355, avg: 19585 },
+  { symbol: 'INFY', tape: 'A', yesterday: 15655, avg: 36300 },
+  { symbol: 'BABA', tape: 'A', yesterday: 10568, avg: 25427 },
+  { symbol: 'TEO',  tape: 'A', yesterday: 10416, avg: 362 },
+  { symbol: 'PBR',  tape: 'A', yesterday: 9976,  avg: 17521 },
+  { symbol: 'NIO',  tape: 'A', yesterday: 9629,  avg: 11107 },
+  { symbol: 'DXF',  tape: 'B', yesterday: 7535,  avg: 0 }
+];
+
+function renderChart(chartData, containerId, isPercent) {
+  const maxVal = Math.max(...chartData.flatMap(r => [r.yesterday, r.avg]), 0.01);
+  const container = document.getElementById(containerId);
+  let lastTape = '';
+
+  container.innerHTML = chartData.map(r => {
+    const yPct = (r.yesterday / maxVal) * 100;
+    const aPct = (r.avg / maxVal) * 100;
+    const suffix = isPercent ? '%' : '';
+    const yDisplay = isPercent ? r.yesterday.toFixed(1) + '%' : fmt(r.yesterday);
+    const aDisplay = isPercent ? r.avg.toFixed(1) + '%' : fmt(r.avg);
+
+    let change, changeStr, changeClass;
+    if (r.avg === 0 || (isPercent && r.avg === 0)) {
+      changeStr = 'NEW';
+      changeClass = 'up';
+    } else {
+      if (isPercent) {
+        change = r.yesterday - r.avg;
+        changeStr = (change >= 0 ? '+' : '') + change.toFixed(1) + 'pp';
+      } else {
+        change = ((r.yesterday - r.avg) / r.avg * 100);
+        changeStr = (change >= 0 ? '+' : '') + change.toFixed(1) + '%';
+      }
+      changeClass = change >= 0 ? 'up' : 'down';
+    }
+
+    const tapeLabel = r.tape !== lastTape ? `<div style="padding:8px 20px;font-size:12px;font-weight:700;color:#1a1f36;background:#f4f5f7;border-bottom:1px solid #eef0f3;">Tape ${r.tape}</div>` : '';
+    lastTape = r.tape;
+
+    return `${tapeLabel}
+    <div class="parity-row">
+      <div class="sym">${r.symbol}</div>
+      <div class="parity-bar-wrap">
+        <div class="parity-bar yesterday" style="width:${yPct}%"></div>
+        <span class="parity-val">${yDisplay}</span>
+        <span class="change-badge ${changeClass}">${changeStr}</span>
+      </div>
+      <div class="parity-bar-wrap">
+        <div class="parity-bar avg" style="width:${aPct}%"></div>
+        <span class="parity-val">${aDisplay}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+renderChart(floorData, 'floor-body', false);
+
+/* ── NYSE Share of Exchange Liquidity at Best Price (Tab 4) ── */
+const liquidityData = [
+  { symbol: 'ZEPP',     tape: 'A', yesterday: 78.2, avg: 56.1 },
+  { symbol: 'STG',      tape: 'A', yesterday: 74.9, avg: 58.2 },
+  { symbol: 'VTMX',     tape: 'A', yesterday: 74.1, avg: 50.8 },
+  { symbol: 'AXIA PRC', tape: 'A', yesterday: 72.7, avg: 57.2 },
+  { symbol: 'CCM',      tape: 'A', yesterday: 69.9, avg: 47.0 },
+  { symbol: 'CPAC',     tape: 'A', yesterday: 67.6, avg: 71.8 },
+  { symbol: 'MOGU',     tape: 'A', yesterday: 64.0, avg: 6.5 },
+  { symbol: 'EDN',      tape: 'A', yesterday: 63.1, avg: 39.6 },
+  { symbol: 'EC',       tape: 'A', yesterday: 58.8, avg: 29.6 },
+  { symbol: 'FEDU',     tape: 'A', yesterday: 56.9, avg: 55.6 },
+  { symbol: 'GMTL',     tape: 'B', yesterday: 2.7,  avg: 2.3 }
+];
+
+renderChart(liquidityData, 'liquidity-body', true);
+
+/* ── Intraday Exchange-Only Market Share (Tab 5) ── */
+const mktshareData = [
+  { symbol: 'LUXE', tape: 'A', yesterday: 60.1, avg: 39.7 },
+  { symbol: 'ZEPP', tape: 'A', yesterday: 57.8, avg: 48.4 },
+  { symbol: 'MFG',  tape: 'A', yesterday: 57.3, avg: 50.1 },
+  { symbol: 'EC',   tape: 'A', yesterday: 51.3, avg: 30.9 },
+  { symbol: 'AXIA', tape: 'A', yesterday: 50.5, avg: 50.9 },
+  { symbol: 'TAK',  tape: 'A', yesterday: 49.3, avg: 47.6 },
+  { symbol: 'TIMB', tape: 'A', yesterday: 48.4, avg: 35.1 },
+  { symbol: 'PSO',  tape: 'A', yesterday: 47.9, avg: 40.4 },
+  { symbol: 'AVAL', tape: 'A', yesterday: 46.5, avg: 39.6 },
+  { symbol: 'BSBR', tape: 'A', yesterday: 46.2, avg: 32.6 }
+];
+
+renderChart(mktshareData, 'mktshare-body', true);
 </script>
 
 </body>
