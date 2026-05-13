@@ -313,6 +313,7 @@
   <button data-tab="floor">Floor Broker Volume</button>
   <button data-tab="liquidity">Best Price Liquidity</button>
   <button data-tab="mktshare">Intraday Mkt Share</button>
+  <button data-tab="compare">Comparison</button>
 </div>
 
 <!-- TAB 1: ADR Volume -->
@@ -424,6 +425,28 @@
         <span>Yesterday</span>
         <span>Prev Intraday Mkt Shr</span>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 6: Comparison -->
+<div class="tab-content" id="tab-compare">
+  <div class="subtitle">Cross-reference ADR Volume data with each metric · Select comparison below</div>
+  <div class="parity-section">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
+      <div class="parity-title" style="margin:0;">Comparison</div>
+      <select id="compare-select" style="padding:8px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;background:#fff;cursor:pointer;">
+        <option value="parity">ADR vs Parity Advantage</option>
+        <option value="floor">ADR vs Floor Broker Volume</option>
+        <option value="liquidity">ADR vs Best Price Liquidity</option>
+        <option value="mktshare">ADR vs Intraday Mkt Share</option>
+      </select>
+    </div>
+    <div class="table-wrap" style="padding:0;">
+      <table>
+        <thead id="compare-thead"></thead>
+        <tbody id="compare-tbody"></tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -890,6 +913,87 @@ const mktshareData = [
 ];
 
 renderChart(mktshareData, 'mktshare-body', true);
+
+/* ── Comparison Tab (Tab 6) ── */
+const compareSets = {
+  parity: { label: 'Parity Advantage', data: parityData, isPercent: false, col1: 'Yesterday Vol', col2: 'Avg 2-Wk Vol' },
+  floor: { label: 'Floor Broker Volume', data: floorData, isPercent: false, col1: 'Yesterday Vol', col2: 'Avg 2-Wk Vol' },
+  liquidity: { label: 'Best Price Liquidity', data: liquidityData, isPercent: true, col1: 'Yesterday %', col2: 'Avg 2-Wk %' },
+  mktshare: { label: 'Intraday Mkt Share', data: mktshareData, isPercent: true, col1: 'Yesterday %', col2: 'Prev Mkt Shr %' }
+};
+
+function renderComparison(key) {
+  const set = compareSets[key];
+  const adrLookup = {};
+  data.forEach(r => { adrLookup[r.symbol] = r; });
+
+  const matched = set.data.filter(r => {
+    const sym = r.symbol.replace(' PRC', '-C').replace(' ', '-');
+    return adrLookup[sym] || adrLookup[r.symbol];
+  });
+
+  const thead = document.getElementById('compare-thead');
+  thead.innerHTML = `<tr>
+    <th>#</th>
+    <th>Symbol</th>
+    <th>Company</th>
+    <th>Country</th>
+    <th>Tape</th>
+    <th style="text-align:right">Monthly ADV</th>
+    <th style="text-align:right">NYSE ADV</th>
+    <th style="text-align:right">NYSE ADV %</th>
+    <th style="text-align:right;color:#e8752a;">${set.col1}</th>
+    <th style="text-align:right;color:#e8752a;">${set.col2}</th>
+    <th style="text-align:right;color:#e8752a;">Change</th>
+  </tr>`;
+
+  const tbody = document.getElementById('compare-tbody');
+  tbody.innerHTML = set.data.map((r, i) => {
+    const sym = r.symbol.replace(' PRC', '-C').replace(' ', '-');
+    const adr = adrLookup[sym] || adrLookup[r.symbol] || {};
+    const flag = countryFlags[adr.country] || '';
+
+    let yDisplay, aDisplay, changeStr, changeClass;
+    if (set.isPercent) {
+      yDisplay = r.yesterday.toFixed(1) + '%';
+      aDisplay = r.avg.toFixed(1) + '%';
+      const diff = r.yesterday - r.avg;
+      changeStr = (diff >= 0 ? '+' : '') + diff.toFixed(1) + 'pp';
+      changeClass = diff >= 0 ? 'up' : 'down';
+    } else {
+      yDisplay = fmt(r.yesterday);
+      aDisplay = fmt(r.avg);
+      if (r.avg === 0) {
+        changeStr = 'NEW';
+        changeClass = 'up';
+      } else {
+        const pct = ((r.yesterday - r.avg) / r.avg * 100);
+        changeStr = (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
+        changeClass = pct >= 0 ? 'up' : 'down';
+      }
+    }
+
+    return `<tr>
+      <td class="rank">${i + 1}</td>
+      <td class="symbol">${r.symbol}</td>
+      <td class="name" title="${adr.name || ''}">${adr.name || '—'}</td>
+      <td class="country"><span class="flag">${flag}</span>${adr.country || '—'}</td>
+      <td style="color:#888;font-size:12px;">${r.tape}</td>
+      <td class="num">${adr.monthly ? fmt(adr.monthly) : '—'}</td>
+      <td class="num">${adr.nyse ? fmt(adr.nyse) : '—'}</td>
+      <td class="pct">${adr.nyse_pct ? adr.nyse_pct.toFixed(2) + '%' : '—'}</td>
+      <td class="num" style="font-weight:600;">${yDisplay}</td>
+      <td class="num">${aDisplay}</td>
+      <td class="pct"><span class="change-badge ${changeClass}">${changeStr}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+document.getElementById('compare-select').addEventListener('change', function() {
+  renderComparison(this.value);
+});
+
+renderComparison('parity');
 </script>
 
 </body>
