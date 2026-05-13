@@ -257,6 +257,7 @@
         <th data-col="symbol">Symbol <span class="arrow">▲</span></th>
         <th data-col="name">Company <span class="arrow">▲</span></th>
         <th data-col="country">Country <span class="arrow">▲</span></th>
+        <th data-col="monthly">Monthly ADV <span class="arrow">▲</span></th>
         <th data-col="nyse" class="active" data-dir="desc">NYSE ADV <span class="arrow">▼</span></th>
         <th data-col="nyse_pct">NYSE ADV % <span class="arrow">▲</span></th>
       </tr>
@@ -486,10 +487,11 @@ function parseCSV(text) {
     return {
       symbol: parts[0]?.trim() || '',
       mic: parts[1]?.trim() || '',
-      nyse: parseInt((parts[2] || '0').replace(/,/g, '').trim()) || 0,
-      nyse_pct: parseFloat((parts[3] || '0').replace('%', '').trim()) || 0,
-      name: parts[4]?.trim() || '',
-      country: parts[5]?.trim() || ''
+      monthly: parseInt((parts[2] || '0').replace(/,/g, '').trim()) || 0,
+      nyse: parseInt((parts[3] || '0').replace(/,/g, '').trim()) || 0,
+      nyse_pct: parseFloat((parts[4] || '0').replace('%', '').trim()) || 0,
+      name: parts[5]?.trim() || '',
+      country: parts[6]?.trim() || ''
     };
   }).filter(r => r.symbol);
 }
@@ -525,6 +527,7 @@ function render() {
       <td class="symbol">${r.symbol}</td>
       <td class="name" title="${r.name}">${r.name}</td>
       <td class="country"><span class="flag">${flag}</span>${r.country}</td>
+      <td class="num">${fmt(r.monthly)}</td>
       <td class="num">${fmt(r.nyse)}</td>
       <td class="pct">
         <div class="bar-cell">
