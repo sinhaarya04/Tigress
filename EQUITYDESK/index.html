@@ -259,7 +259,6 @@
         <th data-col="country">Country <span class="arrow">▲</span></th>
         <th data-col="nyse" class="active" data-dir="desc">NYSE ADV <span class="arrow">▼</span></th>
         <th data-col="nyse_pct">NYSE ADV % <span class="arrow">▲</span></th>
-        <th data-col="monthly_pct">Monthly ADV % <span class="arrow">▲</span></th>
       </tr>
     </thead>
     <tbody id="tbody"></tbody>
@@ -489,9 +488,8 @@ function parseCSV(text) {
       mic: parts[1]?.trim() || '',
       nyse: parseInt((parts[2] || '0').replace(/,/g, '').trim()) || 0,
       nyse_pct: parseFloat((parts[3] || '0').replace('%', '').trim()) || 0,
-      monthly_pct: parseFloat((parts[4] || '0').replace('%', '').trim()) || 0,
-      name: parts[5]?.trim() || '',
-      country: parts[6]?.trim() || ''
+      name: parts[4]?.trim() || '',
+      country: parts[5]?.trim() || ''
     };
   }).filter(r => r.symbol);
 }
@@ -517,7 +515,6 @@ function render() {
   });
 
   const maxNysePct = Math.max(...filtered.map(r => r.nyse_pct), 0.01);
-  const maxMonthlyPct = Math.max(...filtered.map(r => r.monthly_pct), 0.01);
 
   const tbody = document.getElementById('tbody');
   tbody.innerHTML = filtered.map((r, i) => {
@@ -533,12 +530,6 @@ function render() {
         <div class="bar-cell">
           <span>${r.nyse_pct.toFixed(2)}%</span>
           <div class="bar-bg"><div class="bar-fill" style="width:${(r.nyse_pct / maxNysePct) * 100}%"></div></div>
-        </div>
-      </td>
-      <td class="pct">
-        <div class="bar-cell">
-          <span>${r.monthly_pct.toFixed(4)}%</span>
-          <div class="bar-bg"><div class="bar-fill orange" style="width:${(r.monthly_pct / maxMonthlyPct) * 100}%"></div></div>
         </div>
       </td>
     </tr>`;
