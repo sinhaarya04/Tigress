@@ -318,7 +318,7 @@
           const qty    = (parseFloat(row[qtyAllocCol]) || 0) / 1000;
           const accInt = accIntCol !== -1 ? row[accIntCol] : '';
           if (acctId) dataRows.push({
-            otherAcct: companyName + '_' + acctId.padStart(4, '0'),
+            otherAcct: companyName + '_' + (/^\d/.test(acctId) ? acctId.padStart(4, '0') : acctId),
             qty, accInt
           });
         }
