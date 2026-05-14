@@ -532,191 +532,7 @@
 </div>
 
 <script>
-const csvText = `Symbol,Listed_MIC,Monthly_ADV,NYSE_ADV,NYSE_ADV_%,Company_Name,Country
-ATHM,XNYS,"999,373","409,106",40.94%,Autohome Inc.,China
-EDN,XNYS,"102,024","41,502",40.68%,Empresa Distribuidora y Comercializadora Norte Sociedad Anónima,Argentina
-LPL,XNYS,"987,402","388,447",39.34%,"LG Display Co., Ltd.",South Korea
-UMC,XNYS,"8,661,560","3,389,725",39.14%,United Microelectronics Corporation,Taiwan
-CPAC,XNYS,"18,115","7,012",38.71%,Cementos Pacasmayo S.A.A.,Peru
-AXIA-C,XNYS,"151,401","58,031",38.33%,AXIA Energia SA (Warrant),Brazil
-NMR,XNYS,"1,585,390","604,643",38.14%,"Nomura Holdings, Inc.",Japan
-ASX,XNYS,"9,179,259","3,457,856",37.67%,"ASE Technology Holding Co., Ltd.",Taiwan
-DAO,XNYS,"111,195","41,473",37.30%,"Youdao, Inc.",China
-CMCM,XNYS,"14,559","5,380",36.95%,Cheetah Mobile Inc.,China
-AKO.A,XNYS,"1,140",421,36.93%,Embotelladora Andina S.A. (Class A),Chile
-DQ,XNYS,"662,126","244,402",36.91%,Daqo New Energy Corp.,China
-PSO,XNYS,"1,316,754","484,330",36.78%,Pearson plc,United Kingdom
-IRS,XNYS,"182,908","66,424",36.32%,IRSA Inversiones y Representaciones Sociedad Anónima,Argentina
-UGP,XNYS,"2,005,930","721,606",35.97%,Ultrapar Participações S.A.,Brazil
-CSAN,XNYS,"2,112,206","736,123",34.85%,Cosan S.A.,Brazil
-VIPS,XNYS,"1,793,458","599,672",33.44%,Vipshop Holdings Limited,China
-AXIA,XNYS,"2,284,319","734,129",32.14%,AXIA Energia SA,Brazil
-BAK,XNYS,"1,623,239","517,373",31.87%,Braskem S.A.,Brazil
-XYF,XNYS,"154,384","49,005",31.74%,X Financial,China
-MUFG,XNYS,"3,750,164","1,187,532",31.67%,"Mitsubishi UFJ Financial Group, Inc.",Japan
-MFG,XNYS,"5,135,964","1,626,144",31.66%,"Mizuho Financial Group, Inc.",Japan
-BSAC,XNYS,"274,960","87,057",31.66%,Banco Santander-Chile,Chile
-CUK,XNYS,"2,723,258","859,556",31.56%,Carnival Corporation & plc,United States
-TAK,XNYS,"2,753,726","858,722",31.18%,Takeda Pharmaceutical Company Limited,Japan
-YALA,XNYS,"183,671","57,253",31.17%,Yalla Group Limited,United Arab Emirates
-TAL,XNYS,"4,269,331","1,326,014",31.06%,TAL Education Group,China
-RDY,XNYS,"2,044,157","631,652",30.90%,Dr. Reddy's Laboratories Limited,India
-EC,XNYS,"2,909,334","893,697",30.72%,Ecopetrol S.A.,Colombia
-CHT,XNYS,"209,187","63,898",30.55%,"Chunghwa Telecom Co., Ltd.",Taiwan
-TIMB,XNYS,"410,341","124,872",30.43%,TIM S.A.,Brazil
-BCH,XNYS,"397,379","120,680",30.37%,Banco de Chile,Chile
-SBS,XNYS,"1,182,903","353,768",29.91%,Companhia de Saneamento Básico do Estado de São Paulo - SABESP,Brazil
-AVAL,XNYS,"148,189","44,204",29.83%,Grupo Aval Acciones y Valores S.A.,Colombia
-PHI,XNYS,"66,893","19,914",29.77%,PLDT Inc.,Philippines
-ZEPP,XNYS,"133,050","39,582",29.75%,Zepp Health Corporation,Netherlands
-VTMX,XNYS,"67,969","20,182",29.69%,"Corporación Inmobiliaria Vesta, S.A.B. de C.V.",Mexico
-VLRS,XNYS,"813,568","240,033",29.50%,"Controladora Vuela Compañía de Aviación, S.A.B. de C.V.",Mexico
-ING,XNYS,"3,316,426","973,262",29.35%,ING Groep N.V.,Netherlands
-BVN,XNYS,"1,545,880","453,324",29.32%,Compañía de Minas Buenaventura S.A.A.,Peru
-IBN,XNYS,"5,222,780","1,509,013",28.89%,ICICI Bank Limited,India
-YSG,XNYS,"65,319","18,619",28.50%,Yatsen Holding Limited,China
-TKC,XNYS,"1,001,811","281,151",28.06%,Turkcell Iletisim Hizmetleri A.S.,Turkey
-AXIA-,XNYS,"23,272","6,522",28.03%,AXIA Energia SA (Unit),Brazil
-MNSO,XNYS,"709,772","196,983",27.75%,MINISO Group Holding Limited,China
-PKX,XNYS,"163,092","44,520",27.30%,POSCO Holdings Inc.,South Korea
-CDLR,XNYS,"111,233","30,322",27.26%,Cadeler A/S,Denmark
-LOMA,XNYS,"318,431","86,567",27.19%,Loma Negra Compañía Industrial Argentina Sociedad Anónima,Argentina
-HUYA,XNYS,"1,881,816","509,876",27.09%,HUYA Inc.,China
-SMFG,XNYS,"2,408,124","647,961",26.91%,"Sumitomo Mitsui Financial Group, Inc.",Japan
-JKS,XNYS,"619,452","166,603",26.90%,"JinkoSolar Holding Co., Ltd.",China
-KT,XNYS,"2,170,172","570,872",26.31%,KT Corporation,South Korea
-YMM,XNYS,"6,595,819","1,731,828",26.26%,Full Truck Alliance Co. Ltd.,China
-DAVA,XNYS,"574,563","150,482",26.19%,Endava plc,United Kingdom
-HDB,XNYS,"6,791,668","1,775,164",26.14%,HDFC Bank Limited,India
-SKM,XNYS,"2,049,471","534,798",26.09%,"SK Telecom Co., Ltd.",South Korea
-BEKE,XNYS,"4,760,022","1,240,567",26.06%,KE Holdings Inc.,China
-NWG,XNYS,"4,370,961","1,135,637",25.98%,NatWest Group plc,United Kingdom
-HTT,XNYS,"141,622","36,769",25.96%,High Templar Tech Limited,China
-VIV,XNYS,"967,480","249,807",25.82%,Telefônica Brasil S.A.,Brazil
-SQNS,XNYS,"195,966","49,817",25.42%,Sequans Communications S.A.,France
-HMC,XNYS,"1,102,165","279,622",25.37%,"Honda Motor Co., Ltd.",Japan
-WF,XNYS,"83,584","21,063",25.20%,Woori Financial Group Inc.,South Korea
-HMY,XNYS,"5,131,334","1,291,049",25.16%,Harmony Gold Mining Company Limited,South Africa
-AMX,XNYS,"2,843,709","711,202",25.01%,"América Móvil, S.A.B. de C.V.",Mexico
-TME,XNYS,"6,036,993","1,507,867",24.98%,Tencent Music Entertainment Group,China
-SHG,XNYS,"277,636","69,311",24.96%,"Shinhan Financial Group Co., Ltd.",South Korea
-SQM,XNYS,"1,491,322","372,007",24.94%,Sociedad Química y Minera de Chile S.A.,Chile
-JMIA,XNYS,"2,766,037","676,542",24.46%,Jumia Technologies AG,Germany
-NOAH,XNYS,"135,588","33,149",24.45%,Noah Holdings Limited,Singapore
-EDU,XNYS,"1,122,344","273,213",24.34%,New Oriental Education & Technology Group Inc.,China
-TGS,XNYS,"212,995","51,741",24.29%,Transportadora de Gas del Sur S.A.,Argentina
-LU,XNYS,"1,514,685","366,927",24.22%,Lufax Holding Ltd,China
-TX,XNYS,"279,304","67,290",24.09%,Ternium S.A.,Luxembourg
-LITB,XNYS,"8,180","1,964",24.01%,"LightInTheBox Holding Co., Ltd.",Singapore
-ELPC,XNYS,"248,332","59,457",23.94%,Companhia Paranaense de Energia,Brazil
-KEP,XNYS,"588,789","139,415",23.68%,Korea Electric Power Corporation,South Korea
-ZH,XNYS,"317,574","75,068",23.64%,Zhihu Inc.,China
-RLX,XNYS,"2,398,277","564,151",23.52%,RLX Technology Inc.,China
-ENIC,XNYS,"631,736","147,718",23.38%,Enel Chile S.A.,Chile
-YPF,XNYS,"1,275,727","297,119",23.29%,YPF Sociedad Anónima,Argentina
-FMS,XNYS,"680,344","157,690",23.18%,Fresenius Medical Care AG,Germany
-DRD,XNYS,"350,723","80,974",23.09%,DRDGOLD Limited,South Africa
-CIB,XNYS,"524,096","120,942",23.08%,Bancolombia S.A.,Colombia
-FMX,XNYS,"426,066","98,016",23.00%,"Fomento Económico Mexicano, S.A.B. de C.V.",Mexico
-ZTO,XNYS,"2,634,992","601,257",22.82%,ZTO Express (Cayman) Inc.,China
-ASR,XNYS,"71,187","16,187",22.74%,"Grupo Aeroportuario del Sureste, S. A. B. de C. V.",Mexico
-GFI,XNYS,"3,014,986","685,547",22.74%,Gold Fields Limited,South Africa
-PBR.A,XNYS,"9,984,441","2,249,981",22.53%,Petróleo Brasileiro S.A. - Petrobras (Preferred),Brazil
-BSBR,XNYS,"959,326","215,585",22.47%,Banco Santander (Brasil) S.A.,Brazil
-PUK,XNYS,"1,019,428","228,652",22.43%,Prudential plc,United Kingdom
-LUXE,XNYS,"497,994","111,442",22.38%,LuxExperience B.V.,Netherlands
-BBAR,XNYS,"637,059","142,011",22.29%,Banco BBVA Argentina S.A.,Argentina
-CCU,XNYS,"211,760","47,148",22.26%,Compañía Cervecerías Unidas S.A.,Chile
-KOF,XNYS,"244,465","54,009",22.09%,"Coca-Cola FEMSA, S.A.B. de C.V.",Mexico
-TLK,XNYS,"625,717","138,226",22.09%,Perusahaan Perseroan (Persero) PT Telekomunikasi Indonesia Tbk,Indonesia
-LND,XNYS,"79,714","17,541",22.00%,BrasilAgro - Companhia Brasileira de Propriedades Agrícolas,Brazil
-SUZ,XNYS,"3,720,761","817,375",21.97%,Suzano S.A.,Brazil
-TEVA,XNYS,"8,376,998","1,828,994",21.83%,Teva Pharmaceutical Industries Limited,Israel
-PBR,XNYS,"22,227,441","4,817,124",21.67%,Petróleo Brasileiro S.A. - Petrobras,Brazil
-SONY,XNYS,"6,942,388","1,499,573",21.60%,Sony Group Corporation,Japan
-FINV,XNYS,"1,099,213","236,694",21.53%,FinVolution Group,China
-HLN,XNYS,"8,995,679","1,936,597",21.53%,Haleon plc,United Kingdom
-BCS,XNYS,"8,110,538","1,721,661",21.23%,Barclays PLC,United Kingdom
-TV,XNYS,"1,508,793","319,862",21.20%,"Grupo Televisa, S.A.B.",Mexico
-PAC,XNYS,"117,641","24,881",21.15%,"Grupo Aeroportuario del Pacífico, S.A.B. de C.V.",Mexico
-CX,XNYS,"6,748,255","1,405,648",20.83%,"CEMEX, S.A.B. de C.V.",Mexico
-TUYA,XNYS,"1,878,413","388,472",20.68%,Tuya Inc.,China
-WDS,XNYS,"909,770","188,032",20.67%,Woodside Energy Group Limited,Australia
-INFY,XNYS,"19,728,034","4,066,812",20.61%,Infosys Limited,India
-TEO,XNYS,"323,625","66,557",20.57%,Telecom Argentina S.A.,Argentina
-GOTU,XNYS,"408,496","83,606",20.47%,Gaotu Techedu Inc.,China
-WDH,XNYS,"320,133","65,446",20.44%,Waterdrop Inc.,China
-TS,XNYS,"1,586,280","323,920",20.42%,Tenaris S.A.,Luxembourg
-RERE,XNYS,"862,889","175,756",20.37%,ATRenew Inc.,China
-DDL,XNYS,"4,461,365","900,882",20.19%,Dingdong (Cayman) Limited,China
-BMA,XNYS,"333,261","66,950",20.09%,Banco Macro S.A.,Argentina
-PAM,XNYS,"203,571","40,711",20.00%,Pampa Energía S.A.,Argentina
-ZKH,XNYS,"20,034","3,995",19.94%,ZKH Group Limited,China
-SE,XNYS,"6,182,085","1,226,042",19.83%,Sea Limited,Singapore
-KB,XNYS,"312,824","61,793",19.75%,KB Financial Group Inc.,South Korea
-VALE,XNYS,"38,374,686","7,546,483",19.67%,Vale S.A.,Brazil
-YRD,XNYS,"47,490","9,324",19.63%,Yiren Digital Ltd.,China
-WIT,XNYS,"12,732,608","2,484,689",19.51%,Wipro Limited,India
-BHP,XNYS,"4,499,257","875,926",19.47%,BHP Group Limited,Australia
-ITUB,XNYS,"27,102,666","5,213,019",19.23%,Itaú Unibanco Holding S.A.,Brazil
-BP,XNYS,"10,017,975","1,924,045",19.21%,BP p.l.c.,United Kingdom
-SID,XNYS,"4,686,173","894,471",19.09%,Companhia Siderúrgica Nacional,Brazil
-TM,XNYS,"293,405","55,751",19.00%,Toyota Motor Corporation,Japan
-AKO.B,XNYS,"31,146","5,767",18.52%,Embotelladora Andina S.A. (Class B),Chile
-EQNR,XNYS,"5,429,694","1,005,093",18.51%,Equinor ASA,Norway
-SSL,XNYS,"2,649,052","483,388",18.25%,Sasol Limited,South Africa
-BUD,XNYS,"2,811,996","510,242",18.15%,Anheuser-Busch InBev SA/NV,Belgium
-MOGU,XNYS,"15,319","2,746",17.93%,MOGU Inc.,China
-TSM,XNYS,"12,652,893","2,263,913",17.89%,Taiwan Semiconductor Manufacturing Company Limited,Taiwan
-BTI,XNYS,"5,549,472","977,934",17.62%,British American Tobacco p.l.c.,United Kingdom
-XPEV,XNYS,"5,503,833","968,016",17.59%,XPeng Inc.,China
-HSBC,XNYS,"2,746,151","479,184",17.45%,HSBC Holdings plc,United Kingdom
-EMBJ,XNYS,"869,854","151,503",17.42%,Embraer S.A.,Brazil
-SBSW,XNYS,"7,001,258","1,206,962",17.24%,Sibanye Stillwater Limited,South Africa
-IX,XNYS,"415,487","71,417",17.19%,ORIX Corporation,Japan
-CNF,XNYS,"3,662",626,17.09%,CNFinance Holdings Limited,China
-IH,XNYS,"12,275","2,076",16.91%,iHuman Inc.,China
-SNN,XNYS,"810,954","137,027",16.90%,Smith & Nephew plc,United Kingdom
-RELX,XNYS,"6,094,868","1,023,018",16.78%,RELX PLC,United Kingdom
-E,XNYS,"348,929","58,456",16.75%,Eni S.p.A.,Italy
-WPP,XNYS,"750,544","124,415",16.58%,WPP plc,United Kingdom
-VIST,XNYS,"1,389,019","226,159",16.28%,"Vista Energy, S.A.B. de C.V.",Mexico
-RIO,XNYS,"3,778,305","596,599",15.79%,Rio Tinto Group,United Kingdom
-BABA,XNYS,"8,989,312","1,416,530",15.76%,Alibaba Group Holding Limited,Hong Kong
-GHG,XNYS,"29,143","4,517",15.50%,GreenTree Hospitality Group Ltd.,China
-GSK,XNYS,"6,954,322","1,069,523",15.38%,GSK plc,United Kingdom
-LTM,XNYS,"2,084,338","312,623",15.00%,LATAM Airlines Group S.A.,Chile
-AERO,XNYS,"474,759","70,577",14.87%,"Grupo Aeromexico, S.A.B. de C.V",Mexico
-FENG,XNYS,"1,634",241,14.75%,Phoenix New Media Limited,China
-CIG,XNYS,"5,427,199","797,092",14.69%,Companhia Energética de Minas Gerais - CEMIG,Brazil
-BBDO,XNYS,"73,731","10,741",14.57%,Banco Bradesco S.A.,Brazil
-GGB,XNYS,"25,923,476","3,756,062",14.49%,Gerdau S.A.,Brazil
-UL,XNYS,"3,859,579","553,611",14.34%,Unilever PLC,United Kingdom
-NIO,XNYS,"43,365,032","6,212,796",14.33%,NIO Inc.,China
-STG,XNYS,"2,094",299,14.28%,Sunlands Technology Group,China
-NGG,XNYS,"1,337,365","190,469",14.24%,National Grid plc,United Kingdom
-SHEL,XNYS,"6,496,855","920,903",14.17%,Shell plc,United Kingdom
-NOK,XNYS,"37,994,288","5,319,074",14.00%,Nokia Oyj,Finland
-DEO,XNYS,"2,068,599","276,814",13.38%,Diageo plc,United Kingdom
-BBVA,XNYS,"2,608,485","345,124",13.23%,"Banco Bilbao Vizcaya Argentaria, S.A.",Spain
-CIG.C,XNYS,"4,476",585,13.07%,Companhia Energética de Minas Gerais - CEMIG (Preferred),Brazil
-NVO,XNYS,"31,807,360","4,128,751",12.98%,Novo Nordisk A/S,Denmark
-NVS,XNYS,"2,923,124","375,137",12.83%,Novartis AG,Switzerland
-SAP,XNYS,"3,441,706","425,434",12.36%,SAP SE,Germany
-IHG,XNYS,"318,061","38,891",12.23%,InterContinental Hotels Group PLC,United Kingdom
-NTZ,XNYS,"2,366",283,11.96%,Natuzzi S.p.A.,Italy
-BBD,XNYS,"41,590,221","4,861,183",11.69%,Banco Bradesco S.A.,Brazil
-RTO,XNYS,"1,698,684","197,868",11.65%,Rentokil Initial plc,United Kingdom
-LYG,XNYS,"26,536,028","2,913,272",10.98%,Lloyds Banking Group plc,United Kingdom
-CCM,XNYS,"3,850",406,10.55%,Concord Medical Services Holdings Limited,China
-ABEV,XNYS,"24,337,213","2,525,137",10.38%,Ambev S.A.,Brazil
-SAN,XNYS,"20,875,770","2,101,554",10.07%,"Banco Santander, S.A.",Spain
-SLAI,XNYS,"109,940","10,556",9.60%,SOLAI Limited,United States
-AMTD,XNYS,"57,075","5,300",9.29%,AMTD IDEA Group,Singapore
-FEDU,XNYS,"15,489","1,321",8.53%,Four Seasons Education (Cayman) Inc.,China
-MSC,XNYS,978,68,6.95%,Studio City International Holdings Limited,Hong Kong
-HKD,XNYS,"973,573","49,923",5.13%,AMTD Digital Inc.,Singapore
-`;
+const csvText = ``;
 
 /* ── Parity Advantage Data ── */
 const parityData = [
@@ -828,7 +644,7 @@ function render() {
     </tr>`;
   }).join('');
 
-  document.getElementById('stats').textContent = `Showing ${filtered.length} of ${data.length} NYSE ADRs`;
+  document.getElementById('stats').textContent = data.length === 0 ? 'Upload a CSV to get started' : `Showing ${filtered.length} of ${data.length} NYSE ADRs`;
 }
 
 document.querySelectorAll('thead th[data-col]').forEach(th => {
@@ -854,18 +670,7 @@ document.querySelectorAll('thead th[data-col]').forEach(th => {
 document.getElementById('search').addEventListener('input', render);
 document.getElementById('country-filter').addEventListener('change', render);
 
-data = parseCSV(csvText);
-
-const countries = [...new Set(data.map(r => r.country).filter(Boolean))].sort();
-const countrySelect = document.getElementById('country-filter');
-countries.forEach(c => {
-  const opt = document.createElement('option');
-  opt.value = c;
-  const flag = countryFlags[c] || '';
-  opt.textContent = flag + ' ' + c;
-  countrySelect.appendChild(opt);
-});
-
+data = [];
 render();
 
 /* ── Parity Advantage (Tab 2) ── */
@@ -998,7 +803,7 @@ renderChart(mktshareData, 'mktshare-body', true);
 const companyLookup = {"ATHM":{"name":"Autohome Inc.","country":"China"},"EDN":{"name":"Empresa Distribuidora y Comercializadora Norte Sociedad Anónima","country":"Argentina"},"LPL":{"name":"LG Display Co., Ltd.","country":"South Korea"},"UMC":{"name":"United Microelectronics Corporation","country":"Taiwan"},"CPAC":{"name":"Cementos Pacasmayo S.A.A.","country":"Peru"},"AXIA-C":{"name":"AXIA Energia SA (Warrant)","country":"Brazil"},"NMR":{"name":"Nomura Holdings, Inc.","country":"Japan"},"ASX":{"name":"ASE Technology Holding Co., Ltd.","country":"Taiwan"},"DAO":{"name":"Youdao, Inc.","country":"China"},"CMCM":{"name":"Cheetah Mobile Inc.","country":"China"},"AKO.A":{"name":"Embotelladora Andina S.A. (Class A)","country":"Chile"},"DQ":{"name":"Daqo New Energy Corp.","country":"China"},"PSO":{"name":"Pearson plc","country":"United Kingdom"},"IRS":{"name":"IRSA Inversiones y Representaciones Sociedad Anónima","country":"Argentina"},"UGP":{"name":"Ultrapar Participações S.A.","country":"Brazil"},"CSAN":{"name":"Cosan S.A.","country":"Brazil"},"VIPS":{"name":"Vipshop Holdings Limited","country":"China"},"AXIA":{"name":"AXIA Energia SA","country":"Brazil"},"BAK":{"name":"Braskem S.A.","country":"Brazil"},"XYF":{"name":"X Financial","country":"China"},"MUFG":{"name":"Mitsubishi UFJ Financial Group, Inc.","country":"Japan"},"MFG":{"name":"Mizuho Financial Group, Inc.","country":"Japan"},"BSAC":{"name":"Banco Santander-Chile","country":"Chile"},"CUK":{"name":"Carnival Corporation & plc","country":"United States"},"TAK":{"name":"Takeda Pharmaceutical Company Limited","country":"Japan"},"YALA":{"name":"Yalla Group Limited","country":"United Arab Emirates"},"TAL":{"name":"TAL Education Group","country":"China"},"RDY":{"name":"Dr. Reddy's Laboratories Limited","country":"India"},"EC":{"name":"Ecopetrol S.A.","country":"Colombia"},"CHT":{"name":"Chunghwa Telecom Co., Ltd.","country":"Taiwan"},"TIMB":{"name":"TIM S.A.","country":"Brazil"},"BCH":{"name":"Banco de Chile","country":"Chile"},"SBS":{"name":"Companhia de Saneamento Básico do Estado de São Paulo - SABESP","country":"Brazil"},"AVAL":{"name":"Grupo Aval Acciones y Valores S.A.","country":"Colombia"},"PHI":{"name":"PLDT Inc.","country":"Philippines"},"ZEPP":{"name":"Zepp Health Corporation","country":"Netherlands"},"VTMX":{"name":"Corporación Inmobiliaria Vesta, S.A.B. de C.V.","country":"Mexico"},"VLRS":{"name":"Controladora Vuela Compañía de Aviación, S.A.B. de C.V.","country":"Mexico"},"ING":{"name":"ING Groep N.V.","country":"Netherlands"},"BVN":{"name":"Compañía de Minas Buenaventura S.A.A.","country":"Peru"},"IBN":{"name":"ICICI Bank Limited","country":"India"},"YSG":{"name":"Yatsen Holding Limited","country":"China"},"TKC":{"name":"Turkcell Iletisim Hizmetleri A.S.","country":"Turkey"},"AXIA-":{"name":"AXIA Energia SA (Unit)","country":"Brazil"},"MNSO":{"name":"MINISO Group Holding Limited","country":"China"},"PKX":{"name":"POSCO Holdings Inc.","country":"South Korea"},"CDLR":{"name":"Cadeler A/S","country":"Denmark"},"LOMA":{"name":"Loma Negra Compañía Industrial Argentina Sociedad Anónima","country":"Argentina"},"HUYA":{"name":"HUYA Inc.","country":"China"},"SMFG":{"name":"Sumitomo Mitsui Financial Group, Inc.","country":"Japan"},"JKS":{"name":"JinkoSolar Holding Co., Ltd.","country":"China"},"KT":{"name":"KT Corporation","country":"South Korea"},"YMM":{"name":"Full Truck Alliance Co. Ltd.","country":"China"},"DAVA":{"name":"Endava plc","country":"United Kingdom"},"HDB":{"name":"HDFC Bank Limited","country":"India"},"SKM":{"name":"SK Telecom Co., Ltd.","country":"South Korea"},"BEKE":{"name":"KE Holdings Inc.","country":"China"},"NWG":{"name":"NatWest Group plc","country":"United Kingdom"},"HTT":{"name":"High Templar Tech Limited","country":"China"},"VIV":{"name":"Telefônica Brasil S.A.","country":"Brazil"},"SQNS":{"name":"Sequans Communications S.A.","country":"France"},"HMC":{"name":"Honda Motor Co., Ltd.","country":"Japan"},"WF":{"name":"Woori Financial Group Inc.","country":"South Korea"},"HMY":{"name":"Harmony Gold Mining Company Limited","country":"South Africa"},"AMX":{"name":"América Móvil, S.A.B. de C.V.","country":"Mexico"},"TME":{"name":"Tencent Music Entertainment Group","country":"China"},"SHG":{"name":"Shinhan Financial Group Co., Ltd.","country":"South Korea"},"SQM":{"name":"Sociedad Química y Minera de Chile S.A.","country":"Chile"},"JMIA":{"name":"Jumia Technologies AG","country":"Germany"},"NOAH":{"name":"Noah Holdings Limited","country":"Singapore"},"EDU":{"name":"New Oriental Education & Technology Group Inc.","country":"China"},"TGS":{"name":"Transportadora de Gas del Sur S.A.","country":"Argentina"},"LU":{"name":"Lufax Holding Ltd","country":"China"},"TX":{"name":"Ternium S.A.","country":"Luxembourg"},"LITB":{"name":"LightInTheBox Holding Co., Ltd.","country":"Singapore"},"ELPC":{"name":"Companhia Paranaense de Energia","country":"Brazil"},"KEP":{"name":"Korea Electric Power Corporation","country":"South Korea"},"ZH":{"name":"Zhihu Inc.","country":"China"},"RLX":{"name":"RLX Technology Inc.","country":"China"},"ENIC":{"name":"Enel Chile S.A.","country":"Chile"},"YPF":{"name":"YPF Sociedad Anónima","country":"Argentina"},"FMS":{"name":"Fresenius Medical Care AG","country":"Germany"},"DRD":{"name":"DRDGOLD Limited","country":"South Africa"},"CIB":{"name":"Bancolombia S.A.","country":"Colombia"},"FMX":{"name":"Fomento Económico Mexicano, S.A.B. de C.V.","country":"Mexico"},"ZTO":{"name":"ZTO Express (Cayman) Inc.","country":"China"},"ASR":{"name":"Grupo Aeroportuario del Sureste, S. A. B. de C. V.","country":"Mexico"},"GFI":{"name":"Gold Fields Limited","country":"South Africa"},"PBR.A":{"name":"Petróleo Brasileiro S.A. - Petrobras (Preferred)","country":"Brazil"},"BSBR":{"name":"Banco Santander (Brasil) S.A.","country":"Brazil"},"PUK":{"name":"Prudential plc","country":"United Kingdom"},"LUXE":{"name":"LuxExperience B.V.","country":"Netherlands"},"BBAR":{"name":"Banco BBVA Argentina S.A.","country":"Argentina"},"CCU":{"name":"Compañía Cervecerías Unidas S.A.","country":"Chile"},"KOF":{"name":"Coca-Cola FEMSA, S.A.B. de C.V.","country":"Mexico"},"TLK":{"name":"Perusahaan Perseroan (Persero) PT Telekomunikasi Indonesia Tbk","country":"Indonesia"},"LND":{"name":"BrasilAgro - Companhia Brasileira de Propriedades Agrícolas","country":"Brazil"},"SUZ":{"name":"Suzano S.A.","country":"Brazil"},"TEVA":{"name":"Teva Pharmaceutical Industries Limited","country":"Israel"},"PBR":{"name":"Petróleo Brasileiro S.A. - Petrobras","country":"Brazil"},"SONY":{"name":"Sony Group Corporation","country":"Japan"},"FINV":{"name":"FinVolution Group","country":"China"},"HLN":{"name":"Haleon plc","country":"United Kingdom"},"BCS":{"name":"Barclays PLC","country":"United Kingdom"},"TV":{"name":"Grupo Televisa, S.A.B.","country":"Mexico"},"PAC":{"name":"Grupo Aeroportuario del Pacífico, S.A.B. de C.V.","country":"Mexico"},"CX":{"name":"CEMEX, S.A.B. de C.V.","country":"Mexico"},"TUYA":{"name":"Tuya Inc.","country":"China"},"WDS":{"name":"Woodside Energy Group Limited","country":"Australia"},"INFY":{"name":"Infosys Limited","country":"India"},"TEO":{"name":"Telecom Argentina S.A.","country":"Argentina"},"GOTU":{"name":"Gaotu Techedu Inc.","country":"China"},"WDH":{"name":"Waterdrop Inc.","country":"China"},"TS":{"name":"Tenaris S.A.","country":"Luxembourg"},"RERE":{"name":"ATRenew Inc.","country":"China"},"DDL":{"name":"Dingdong (Cayman) Limited","country":"China"},"BMA":{"name":"Banco Macro S.A.","country":"Argentina"},"PAM":{"name":"Pampa Energía S.A.","country":"Argentina"},"ZKH":{"name":"ZKH Group Limited","country":"China"},"SE":{"name":"Sea Limited","country":"Singapore"},"KB":{"name":"KB Financial Group Inc.","country":"South Korea"},"VALE":{"name":"Vale S.A.","country":"Brazil"},"YRD":{"name":"Yiren Digital Ltd.","country":"China"},"WIT":{"name":"Wipro Limited","country":"India"},"BHP":{"name":"BHP Group Limited","country":"Australia"},"ITUB":{"name":"Itaú Unibanco Holding S.A.","country":"Brazil"},"BP":{"name":"BP p.l.c.","country":"United Kingdom"},"SID":{"name":"Companhia Siderúrgica Nacional","country":"Brazil"},"TM":{"name":"Toyota Motor Corporation","country":"Japan"},"AKO.B":{"name":"Embotelladora Andina S.A. (Class B)","country":"Chile"},"EQNR":{"name":"Equinor ASA","country":"Norway"},"SSL":{"name":"Sasol Limited","country":"South Africa"},"BUD":{"name":"Anheuser-Busch InBev SA/NV","country":"Belgium"},"MOGU":{"name":"MOGU Inc.","country":"China"},"TSM":{"name":"Taiwan Semiconductor Manufacturing Company Limited","country":"Taiwan"},"BTI":{"name":"British American Tobacco p.l.c.","country":"United Kingdom"},"XPEV":{"name":"XPeng Inc.","country":"China"},"HSBC":{"name":"HSBC Holdings plc","country":"United Kingdom"},"EMBJ":{"name":"Embraer S.A.","country":"Brazil"},"SBSW":{"name":"Sibanye Stillwater Limited","country":"South Africa"},"IX":{"name":"ORIX Corporation","country":"Japan"},"CNF":{"name":"CNFinance Holdings Limited","country":"China"},"IH":{"name":"iHuman Inc.","country":"China"},"SNN":{"name":"Smith & Nephew plc","country":"United Kingdom"},"RELX":{"name":"RELX PLC","country":"United Kingdom"},"E":{"name":"Eni S.p.A.","country":"Italy"},"WPP":{"name":"WPP plc","country":"United Kingdom"},"VIST":{"name":"Vista Energy, S.A.B. de C.V.","country":"Mexico"},"RIO":{"name":"Rio Tinto Group","country":"United Kingdom"},"BABA":{"name":"Alibaba Group Holding Limited","country":"Hong Kong"},"GHG":{"name":"GreenTree Hospitality Group Ltd.","country":"China"},"GSK":{"name":"GSK plc","country":"United Kingdom"},"LTM":{"name":"LATAM Airlines Group S.A.","country":"Chile"},"AERO":{"name":"Grupo Aeromexico, S.A.B. de C.V","country":"Mexico"},"FENG":{"name":"Phoenix New Media Limited","country":"China"},"CIG":{"name":"Companhia Energética de Minas Gerais - CEMIG","country":"Brazil"},"BBDO":{"name":"Banco Bradesco S.A.","country":"Brazil"},"GGB":{"name":"Gerdau S.A.","country":"Brazil"},"UL":{"name":"Unilever PLC","country":"United Kingdom"},"NIO":{"name":"NIO Inc.","country":"China"},"STG":{"name":"Sunlands Technology Group","country":"China"},"NGG":{"name":"National Grid plc","country":"United Kingdom"},"SHEL":{"name":"Shell plc","country":"United Kingdom"},"NOK":{"name":"Nokia Oyj","country":"Finland"},"DEO":{"name":"Diageo plc","country":"United Kingdom"},"BBVA":{"name":"Banco Bilbao Vizcaya Argentaria, S.A.","country":"Spain"},"CIG.C":{"name":"Companhia Energética de Minas Gerais - CEMIG (Preferred)","country":"Brazil"},"NVO":{"name":"Novo Nordisk A/S","country":"Denmark"},"NVS":{"name":"Novartis AG","country":"Switzerland"},"SAP":{"name":"SAP SE","country":"Germany"},"IHG":{"name":"InterContinental Hotels Group PLC","country":"United Kingdom"},"NTZ":{"name":"Natuzzi S.p.A.","country":"Italy"},"BBD":{"name":"Banco Bradesco S.A.","country":"Brazil"},"RTO":{"name":"Rentokil Initial plc","country":"United Kingdom"},"LYG":{"name":"Lloyds Banking Group plc","country":"United Kingdom"},"CCM":{"name":"Concord Medical Services Holdings Limited","country":"China"},"ABEV":{"name":"Ambev S.A.","country":"Brazil"},"SAN":{"name":"Banco Santander, S.A.","country":"Spain"},"SLAI":{"name":"SOLAI Limited","country":"United States"},"AMTD":{"name":"AMTD IDEA Group","country":"Singapore"},"FEDU":{"name":"Four Seasons Education (Cayman) Inc.","country":"China"},"ERIC":{"name":"Telefonaktiebolaget LM Ericsson (publ)","country":"Sweden"},"MSC":{"name":"Studio City International Holdings Limited","country":"Hong Kong"},"SIM":{"name":"Grupo Simec, S.A.B. de C.V.","country":"Mexico"},"IMMP":{"name":"Immutep Limited","country":"Australia"},"HCM":{"name":"HUTCHMED (China) Limited","country":"Hong Kong"},"VOD":{"name":"Vodafone Group Public Limited Company","country":"United Kingdom"},"HKD":{"name":"AMTD Digital Inc.","country":"Singapore"},"IQ":{"name":"iQIYI, Inc.","country":"China"},"BRBI":{"name":"BRBI BR Partners S.A.","country":"Brazil"},"OMAB":{"name":"Grupo Aeroportuario del Centro Norte, S.A.B. de C.V.","country":"Mexico"},"NNDM":{"name":"Nano Dimension Ltd.","country":"Israel"},"IMOS":{"name":"ChipMOS TECHNOLOGIES INC.","country":"Taiwan"},"AUTL":{"name":"Autolus Therapeutics plc","country":"United Kingdom"},"RADX":{"name":"Radiopharm Theranostics Limited","country":"Australia"},"TLX":{"name":"Telix Pharmaceuticals Limited","country":"Australia"},"MOMO":{"name":"Hello Group Inc.","country":"China"},"LX":{"name":"LexinFintech Holdings Ltd.","country":"China"},"API":{"name":"Agora, Inc.","country":"United States"},"MESO":{"name":"Mesoblast Limited","country":"Australia"},"MRM":{"name":"MEDIROM Healthcare Technologies Inc.","country":"Japan"},"RYAAY":{"name":"Ryanair Holdings plc","country":"Ireland"},"VIOT":{"name":"Viomi Technology Co., Ltd","country":"China"},"NVX":{"name":"NOVONIX Limited","country":"Australia"},"NBP":{"name":"NovaBridge Biosciences","country":"United States"},"NIU":{"name":"Niu Technologies","country":"China"},"TCOM":{"name":"Trip.com Group Limited","country":"Singapore"},"IPX":{"name":"IperionX Limited","country":"Australia"},"SY":{"name":"So-Young International Inc.","country":"China"},"PONY":{"name":"Pony AI Inc.","country":"China"},"LI":{"name":"Li Auto Inc.","country":"China"},"JD":{"name":"JD.com, Inc.","country":"China"},"KC":{"name":"Kingsoft Cloud Holdings Limited","country":"China"},"BILI":{"name":"Bilibili Inc.","country":"China"},"HIMX":{"name":"Himax Technologies, Inc.","country":"Taiwan"},"IONR":{"name":"ioneer Ltd","country":"Australia"},"GLPG":{"name":"Galapagos NV","country":"Belgium"},"BZUN":{"name":"Baozun Inc.","country":"China"},"MLCO":{"name":"Melco Resorts & Entertainment Limited","country":"Hong Kong"},"HDL":{"name":"Super Hi International Holding Ltd.","country":"Singapore"},"GRFS":{"name":"Grifols, S.A.","country":"Spain"},"AGMB":{"name":"AgomAb Therapeutics NV","country":"Belgium"},"BZ":{"name":"KANZHUN LIMITED - American Depo","country":"China"},"ELVR":{"name":"Elevra Lithium Limited","country":"Australia"},"GMAB":{"name":"Genmab A/S","country":"Denmark"},"ONC":{"name":"BeOne Medicines AG","country":"Switzerland"},"ARM":{"name":"Arm Holdings plc","country":"United Kingdom"},"JOYY":{"name":"JOYY Inc.","country":"Singapore"},"WRD":{"name":"WeRide Inc.","country":"China"},"VEON":{"name":"VEON Ltd.","country":"United Arab Emirates"},"NCTY":{"name":"The9 Limited","country":"China"},"BNTX":{"name":"BioNTech SE","country":"Germany"},"GRVY":{"name":"Gravity Co., Ltd.","country":"South Korea"},"KSPI":{"name":"Joint Stock Company Kaspi.kz","country":"Kazakhstan"},"ZLAB":{"name":"Zai Lab Limited","country":"China"},"SNY":{"name":"Sanofi","country":"France"},"ASML":{"name":"ASML Holding N.V.","country":"Netherlands"},"NTES":{"name":"NetEase, Inc.","country":"China"},"BIDU":{"name":"Baidu, Inc.","country":"China"},"WB":{"name":"Weibo Corporation","country":"China"},"CRTO":{"name":"Criteo S.A.","country":"France"},"VNET":{"name":"VNET Group, Inc.","country":"China"},"YMT":{"name":"Yimutian Inc.","country":"China"},"VALN":{"name":"Valneva SE","country":"France"},"EH":{"name":"EHang Holdings Limited","country":"China"},"RCEL":{"name":"AVITA Medical, Inc.","country":"Australia"},"ARGX":{"name":"argenx SE","country":"Netherlands"},"GDS":{"name":"GDS Holdings Limited","country":"China"},"SOGP":{"name":"Sound Group Inc.","country":"Singapore"},"PDD":{"name":"PDD Holdings Inc.","country":"Ireland"},"AMBR":{"name":"Amber International Holding Limited","country":"Singapore"},"NICE":{"name":"NICE Ltd.","country":"Israel"},"EM":{"name":"Smart Share Global Limited","country":"China"},"HERE":{"name":"Here Group Limited","country":"China"},"UXIN":{"name":"Uxin Limited","country":"China"},"SIMO":{"name":"Silicon Motion Technology Corporation","country":"Taiwan"},"QFIN":{"name":"Qfin Holdings, Inc.","country":"China"},"LEGN":{"name":"Legend Biotech Corporation","country":"United States"},"CHA":{"name":"Chagee Holdings Limited","country":"China"},"GPCR":{"name":"Structure Therapeutics Inc.","country":"United States"},"HTHT":{"name":"H World Group Limited","country":"China"},"ATAT":{"name":"Atour Lifestyle Holdings Limited","country":"China"},"JG":{"name":"Aurora Mobile Limited","country":"China"},"EVO":{"name":"Evotec SE","country":"Germany"},"FUTU":{"name":"Futu Holdings Limited","country":"Hong Kong"},"SLN":{"name":"Silence Therapeutics plc","country":"United Kingdom"},"ASND":{"name":"Ascendis Pharma A/S","country":"Denmark"},"MOB":{"name":"Mobilicom Limited","country":"Israel"},"ABVX":{"name":"ABIVAX Société Anonyme","country":"France"},"IMCR":{"name":"Immunocore Holdings plc","country":"United Kingdom"},"HEPS":{"name":"D-Market Elektronik Hizmetler ve Ticaret A.S.","country":"Turkey"},"BLTE":{"name":"Belite Bio, Inc","country":"United States"},"XNET":{"name":"Xunlei Limited","country":"China"},"GGAL":{"name":"Grupo Financiero Galicia S.A.","country":"Argentina"},"CMPS":{"name":"COMPASS Pathways plc","country":"United Kingdom"},"ALAR":{"name":"Alarum Technologies Ltd.","country":"Israel"},"JFIN":{"name":"Jiayin Group Inc.","country":"China"},"ANL":{"name":"Adlai Nortye Ltd.","country":"United States"},"EVAX":{"name":"Evaxion A/S","country":"Denmark"},"NVA":{"name":"Nova Minerals Limited","country":"Australia"},"OPRA":{"name":"Opera Limited","country":"Norway"},"MTLS":{"name":"Materialise NV","country":"Belgium"},"CNTA":{"name":"Centessa Pharmaceuticals plc","country":"United Kingdom"},"CRESY":{"name":"Cresud Sociedad Anónima, Comercial, Inmobiliaria, Financiera y Agropecuaria","country":"Argentina"},"IVA":{"name":"Inventiva S.A.","country":"France"},"PRTC":{"name":"PureTech Health plc","country":"United Kingdom"},"OTLY":{"name":"Oatly Group AB","country":"Sweden"},"BWAY":{"name":"BrainsWay Ltd.","country":"Israel"},"SIFY":{"name":"Sify Technologies Limited","country":"India"},"NBTX":{"name":"Nanobiotix S.A.","country":"France"},"CLLS":{"name":"Cellectis S.A.","country":"France"},"XTLB":{"name":"XTL Biopharmaceuticals Ltd.","country":"Israel"},"YB":{"name":"Yuanbao Inc.","country":"China"},"BCYC":{"name":"Bicycle Therapeutics plc","country":"United Kingdom"},"TRIB":{"name":"Trinity Biotech plc","country":"Ireland"},"IPHA":{"name":"Innate Pharma S.A.","country":"France"},"WKEY":{"name":"WISeKey International Holding AG","country":"Switzerland"},"BNR":{"name":"Burning Rock Biotech Limited","country":"China"},"MREO":{"name":"Mereo BioPharma Group plc","country":"United Kingdom"},"KZIA":{"name":"Kazia Therapeutics Limited","country":"Australia"},"BDRX":{"name":"Biodexa Pharmaceuticals Plc","country":"United Kingdom"},"QNRX":{"name":"Quoin Pharmaceuticals, Ltd.","country":"Israel"},"TRVG":{"name":"trivago N.V.","country":"Netherlands"},"QH":{"name":"Quhuo Limited","country":"China"},"EDAP":{"name":"EDAP TMS S.A.","country":"France"},"LFS":{"name":"Leifras Co., Ltd.","country":"Japan"},"FLX":{"name":"BingEx Limited","country":"China"},"CAN":{"name":"Canaan Inc.","country":"China"},"MOLN":{"name":"Molecular Partners AG","country":"Switzerland"},"AMRN":{"name":"Amarin Corporation plc","country":"Ireland"},"YI":{"name":"111, Inc.","country":"China"},"ADAG":{"name":"Adagene Inc.","country":"China"},"DDI":{"name":"DoubleDown Interactive Co., Ltd.","country":"South Korea"},"SCAG":{"name":"Scage Future","country":"China"},"DOYU":{"name":"DouYu International Holdings Limited","country":"China"},"ICG":{"name":"Intchains Group Limited","country":"China"},"AIXI":{"name":"Xiao-I Corporation","country":"China"},"FITBI":{"name":"Fifth Third Bancorp","country":"United States"},"JZ":{"name":"Jianzhi Education Technology Group Company Limited","country":"China"},"GNTA":{"name":"Genenta Science S.p.A.","country":"Italy"},"FRSX":{"name":"Foresight Autonomous Holdings Ltd.","country":"Israel"},"YJ":{"name":"Yunji Inc.","country":"China"},"TOUR":{"name":"Tuniu Corporation","country":"China"},"LOT":{"name":"Lotus Technology Inc.","country":"China"},"NEUP":{"name":"Neuphoria Therapeutics Inc.","country":"United States"},"LXEH":{"name":"Lixiang Education Holding Co., Ltd.","country":"China"},"IMRN":{"name":"Immuron Limited","country":"Australia"},"YQ":{"name":"17 Education & Technology Group Inc.","country":"China"},"IXHL":{"name":"Incannex Healthcare Inc.","country":"Australia"},"PPBT":{"name":"Purple Biotech Ltd","country":"Israel"},"HUIZ":{"name":"Huize Holding Limited","country":"China"},"AAPG":{"name":"Ascentage Pharma Group International","country":"China"},"BRNS":{"name":"Barinthus Biotherapeutics plc","country":"United States"},"POM":{"name":"Pomdoctor Limited","country":"China"},"CMMB":{"name":"Chemomab Therapeutics Ltd.","country":"Israel"},"NCNA":{"name":"NuCana plc","country":"United Kingdom"},"JFU":{"name":"9F Inc.","country":"China"},"AKTX":{"name":"Akari Therapeutics, Plc","country":"United States"},"ARBK":{"name":"Argo Blockchain plc","country":"United Kingdom"},"XHG":{"name":"XChange TEC.INC","country":"China"},"STKH":{"name":"Steakholder Foods Ltd.","country":"Israel"},"ILAG":{"name":"Intelligent Living Application Group Inc.","country":"Hong Kong"},"YXT":{"name":"YXT.COM Group Holding Limited","country":"China"},"SVRE":{"name":"SaverOne 2014 Ltd.","country":"Israel"},"CANF":{"name":"Can-Fite BioPharma Ltd.","country":"Israel"},"YOUL":{"name":"Youlife Group Inc.","country":"China"},"RDHL":{"name":"RedHill Biopharma Ltd.","country":"Israel"},"NWGL":{"name":"CL Workshop Group Limited","country":"Macau"},"VSA":{"name":"VisionSys AI Inc.","country":"China"},"SCNI":{"name":"Scinai Immunotherapeutics Ltd.","country":"Israel"},"AMBO":{"name":"Ambow Education Holding Ltd. Am","country":"United States"},"PCLA":{"name":"PicoCELA Inc.","country":"Japan"},"DXF":{"name":"Eason Technology Limited","country":"China"},"WYHG":{"name":"Wing Yip Food Holdings Group Limited","country":"China"},"PDC":{"name":"Perpetuals.com Ltd","country":"Japan"},"NIPG":{"name":"NIP Group Inc.","country":"China"},"TDTH":{"name":"Trident Digital Tech Holdings Ltd","country":"Singapore"},"TC":{"name":"Token Cat Limited","country":"China"},"XCH":{"name":"XCHG Limited","country":"China"},"MYND":{"name":"Mynd.ai, Inc.","country":"United States"},"TURB":{"name":"Turbo Energy, S.A.","country":"Spain"},"NAMI":{"name":"Jinxin Technology Holding Company","country":"China"},"ADXN":{"name":"Addex Therapeutics Ltd","country":"Switzerland"},"LRE":{"name":"Lead Real Estate Co., Ltd","country":"Japan"},"BLRX":{"name":"BioLineRx Ltd.","country":"Israel"},"JF":{"name":"J and Friends Holdings Limited","country":"China"},"COE":{"name":"51Talk Online Education Group","country":"Singapore"},"NAAS":{"name":"NaaS Technology Inc.","country":"China"},"AHG":{"name":"Akso Health Group","country":"China"},"TKLF":{"name":"Tokyo Lifestyle Co., Ltd.","country":"Japan"},"AACG":{"name":"ATA Creativity Global","country":"China"},"KRKR":{"name":"36Kr Holdings Inc.","country":"China"},"FORTY":{"name":"Formula Systems (1985) Ltd.","country":"Israel"}};
 
 /* ── CSV Upload ── */
-const defaultData = [...data];
+/* no default data — starts empty */
 const uploadZone = document.getElementById('upload-zone');
 const csvInput = document.getElementById('csv-input');
 const uploadStatus = document.getElementById('upload-status');
@@ -1034,7 +839,7 @@ csvInput.addEventListener('change', () => {
 });
 
 uploadReset.addEventListener('click', () => {
-  data = [...defaultData];
+  data = [];
   uploadStatus.style.display = 'none';
   uploadZone.style.display = '';
   rebuildCountryFilter();
