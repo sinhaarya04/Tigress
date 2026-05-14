@@ -315,11 +315,12 @@
         const row = allRows[r];
         if (String(row[0]).trim().toLowerCase() === 'my side') {
           const acctId = String(row[acctIdCol]).trim();
-          const qty    = (parseFloat(row[qtyAllocCol]) || 0) / 1000;
+          const rawQty = parseFloat(row[qtyAllocCol]) || 0;
+          const qty    = rawQty / 1000;
           const accInt = accIntCol !== -1 ? row[accIntCol] : '';
           if (acctId) dataRows.push({
             otherAcct: companyName + '_' + (/^\d/.test(acctId) ? acctId.padStart(4, '0') : acctId),
-            qty, accInt
+            qty, rawQty, accInt
           });
         }
       }
@@ -335,7 +336,7 @@
       // Data rows
       let totalQty = 0;
       for (const d of dataRows) {
-        const principal = parseFloat((d.qty * (parseFloat(price) || 0)).toFixed(2));
+        const principal = parseFloat((d.rawQty * (parseFloat(price) || 0)).toFixed(2));
         totalQty += d.qty;
 
         const row = exWS.addRow([
