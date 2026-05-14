@@ -282,9 +282,11 @@
       const tradingAcct   = String(cellVal(ws, 2, 0)).trim();
       const secCode       = cellVal(ws, 5, 6);
       const bs            = cellVal(ws, 5, 8);
+      const k6Raw         = cellVal(ws, 5, 10);   // K6 — block qty
       const price         = cellVal(ws, 5, 11);
       const settleDateRaw = cellVal(ws, 5, 15);
       const tradeDateRaw  = cellVal(ws, 5, 16);
+      const k6Qty         = (parseFloat(k6Raw) || 0) / 1000;
 
       const time      = extractTime(timeRaw);
       const tradeDate = excelDateToMDY(tradeDateRaw);
@@ -352,11 +354,18 @@
         }
       }
 
-      // Total row — qty only
+      // Total row — qty only, green if matches K6
+      const totalQtyRounded = parseFloat(totalQty.toFixed(3));
       const totalRow = exWS.addRow(
-        OUTPUT_COLS.map((_, i) => i === QTY_COL_IDX ? parseFloat(totalQty.toFixed(3)) : '')
+        OUTPUT_COLS.map((_, i) => i === QTY_COL_IDX ? totalQtyRounded : '')
       );
-      totalRow.getCell(QTY_COL_IDX + 1).font = { bold: true };
+      const totalCell = totalRow.getCell(QTY_COL_IDX + 1);
+      totalCell.font = { bold: true };
+      const qtyMatches = Math.abs(totalQtyRounded - k6Qty) < 0.001;
+      if (qtyMatches) {
+        totalCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF00B050' } };
+        totalCell.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+      }
 
       outputBuffer = await exWB.xlsx.writeBuffer();
 
