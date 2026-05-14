@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fixed Income</title>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #222; background: #f4f6fb; }
+
+    header { padding: 16px 30px; border-bottom: 3px solid #146FF8; background: #fff; }
+    header h1 { font-size: 22px; color: #146FF8; font-weight: bold; }
+
+    .page { max-width: 780px; margin: 32px auto; padding: 0 20px; display: flex; flex-direction: column; gap: 20px; }
+
+    .card { background: #fff; border: 1px solid #dde3f0; border-radius: 6px; padding: 22px 24px; }
+    .card h2 { font-size: 13px; color: #555; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 14px; }
+
+    .step-label {
+      display: inline-block; background: #146FF8; color: #fff;
+      font-size: 11px; font-weight: bold; padding: 2px 8px;
+      border-radius: 10px; margin-right: 8px; letter-spacing: 0.5px;
+    }
+
+    .upload-zone {
+      border: 2px dashed #b0c4f0; border-radius: 5px; padding: 28px;
+      text-align: center; cursor: pointer;
+      transition: background 0.2s, border-color 0.2s; background: #f7f9ff;
+    }
+    .upload-zone:hover, .upload-zone.drag-over { background: #e8f0fe; border-color: #E87722; }
+    .upload-zone input[type="file"] { display: none; }
+    .upload-zone p { font-size: 12px; color: #666; margin-bottom: 12px; }
+    .file-loaded { font-size: 12px; color: #27ae60; font-weight: bold; margin-top: 10px; display: none; }
+
+    .btn { border: none; border-radius: 3px; padding: 9px 22px; font-size: 13px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+    .btn-blue { background: #146FF8; color: #fff; }
+    .btn-blue:hover { background: #0d4db5; }
+    .btn-orange { background: #E87722; color: #fff; }
+    .btn-orange:hover { background: #c9621a; }
+
+    .actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .status-msg { font-size: 13px; color: #146FF8; }
+    .status-msg.error { color: #c0392b; }
+    .status-msg.ok { color: #27ae60; }
+
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.4); z-index: 100;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #fff; border-radius: 8px; padding: 28px 32px; max-width: 380px; width: 100%; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+    .modal h3 { font-size: 15px; color: #146FF8; margin-bottom: 16px; }
+    .modal input[type="text"] { width: 100%; border: 1px solid #b0c4f0; border-radius: 3px; padding: 8px 10px; font-size: 13px; margin-bottom: 16px; }
+    .modal input[type="text"]:focus { outline: none; border-color: #146FF8; }
+    .modal-actions { display: flex; justify-content: flex-end; }
+
+    footer { margin-top: 20px; background: #1a1a2e; color: #aab; font-size: 11px; padding: 14px 20px; text-align: center; line-height: 1.9; }
+    footer a { color: #7ab0ff; text-decoration: none; }
+    footer .reg-badges { color: #fff; font-weight: bold; letter-spacing: 1px; margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+
+<header><h1>Fixed Income</h1></header>
+
+<div class="page">
+
+  <!-- Step 1: Accts -->
+  <div class="card">
+    <h2><span class="step-label">1</span>Load Accounts Reference</h2>
+    <div class="upload-zone" id="acctZone" onclick="document.getElementById('acctInput').click()">
+      <input type="file" id="acctInput" accept=".xlsx,.xls,.csv" />
+      <p>Drop your Accounts file here, or click to browse<br>(.xlsx, .xls, or .csv)</p>
+      <button class="btn btn-blue" onclick="event.stopPropagation(); document.getElementById('acctInput').click()">Choose Accts File</button>
+      <div class="file-loaded" id="acctStatus"></div>
+    </div>
+  </div>
+
+  <!-- Step 2: DTCC CTM -->
+  <div class="card">
+    <h2><span class="step-label">2</span>Drop DTCC CTM File</h2>
+    <div class="upload-zone" id="ctmZone" onclick="document.getElementById('ctmInput').click()">
+      <input type="file" id="ctmInput" accept=".xlsx,.xls,.csv" />
+      <p>Drop the DTCC CTM file here, or click to browse<br>(.xlsx, .xls, or .csv)</p>
+      <button class="btn btn-blue" onclick="event.stopPropagation(); document.getElementById('ctmInput').click()">Choose CTM File</button>
+      <div class="file-loaded" id="ctmStatus"></div>
+    </div>
+  </div>
+
+  <!-- Step 3: Generate -->
+  <div class="card">
+    <div class="actions">
+      <button class="btn btn-blue" onclick="processFile()">Process</button>
+      <button class="btn btn-orange" id="btnDownload" style="display:none" onclick="downloadOutput()">Download Output</button>
+      <span class="status-msg" id="statusMsg"></span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Company name modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>Company Name</h3>
+    <input type="text" id="modalInput" placeholder="Enter company name..." />
+    <div class="modal-actions">
+      <button class="btn btn-blue" onclick="resolveModal()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="reg-badges">NYSE · FINRA · MSRB · SIPC · WBENC · DOBE</div>
+  <div>
+    &copy; 2026 Tigress Financial Partners, LLC. All rights reserved.
+    &nbsp;|&nbsp; <a href="#">Terms of Use</a>
+    &nbsp;|&nbsp; <a href="#">Privacy Statement</a>
+    &nbsp;|&nbsp; <a href="#">SEC Disclosures</a>
+  </div>
+</footer>
+
+<script>
+  const OUTPUT_COLS = [
+    'Trade', 'Time', 'Settl', 'Trading Acct', 'Other Acct',
+    'Cusip', 'B - S', 'Quantity', 'Principal', 'Acc Interest',
+    'Quote/ Price', 'Do not Rept'
+  ];
+  const OTHER_ACCT_COL_IDX = 4;  // 0-based index in output row
+  const QTY_COL_IDX        = 7;  // 0-based index in output row
+
+  let acctSet  = new Set();  // col A values from Accts file
+  let ctmWB    = null;
+  let outputBuffer = null;
+  let modalResolve = null;
+
+  // ── File reading ─────────────────────────────────────────────────
+  function readWorkbook(file) {
+    return new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const buf   = e.target.result;
+          const bytes = new Uint8Array(buf.slice(0, 4));
+          const isBinary = (bytes[0] === 0xD0 && bytes[1] === 0xCF) ||
+                           (bytes[0] === 0x50 && bytes[1] === 0x4B);
+          if (isBinary || !file.name.endsWith('.csv')) {
+            res(XLSX.read(buf, { type: 'array', cellDates: false }));
+          } else {
+            res(XLSX.read(new TextDecoder().decode(buf), { type: 'string', cellDates: false }));
+          }
+        } catch(err) { rej(err); }
+      };
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
+  function setupZone(zoneId, inputId, handler) {
+    const zone  = document.getElementById(zoneId);
+    const input = document.getElementById(inputId);
+    input.addEventListener('change', () => { if (input.files[0]) handler(input.files[0]); });
+    zone.addEventListener('dragover',  e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault(); zone.classList.remove('drag-over');
+      if (e.dataTransfer.files[0]) handler(e.dataTransfer.files[0]);
+    });
+  }
+
+  // ── Load Accts ───────────────────────────────────────────────────
+  setupZone('acctZone', 'acctInput', async file => {
+    try {
+      const wb   = await readWorkbook(file);
+      const ws   = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+      acctSet = new Set(rows.map(r => String(r[0] || '').trim()).filter(Boolean));
+      const el = document.getElementById('acctStatus');
+      el.textContent = `✓ ${file.name} (${acctSet.size} accounts)`;
+      el.style.display = 'block';
+    } catch(e) { setStatus('Error reading Accts file: ' + e.message, 'error'); }
+  });
+
+  // ── Load CTM ─────────────────────────────────────────────────────
+  setupZone('ctmZone', 'ctmInput', async file => {
+    try {
+      ctmWB = await readWorkbook(file);
+      outputBuffer = null;
+      document.getElementById('btnDownload').style.display = 'none';
+      setStatus('');
+      const el = document.getElementById('ctmStatus');
+      el.textContent = `✓ ${file.name}`;
+      el.style.display = 'block';
+    } catch(e) { setStatus('Error reading CTM file: ' + e.message, 'error'); }
+  });
+
+  // ── Helpers ──────────────────────────────────────────────────────
+  function cellVal(ws, r, c) {
+    const cell = ws[XLSX.utils.encode_cell({ r, c })];
+    return cell ? cell.v : '';
+  }
+
+  function excelDateToMDY(v) {
+    if (!v && v !== 0) return '';
+    if (typeof v === 'string') {
+      const d = new Date(v);
+      return isNaN(d) ? v : fmtMDY(d);
+    }
+    return fmtMDY(new Date(Math.round((v - 25569) * 86400 * 1000)));
+  }
+
+  function fmtMDY(d) {
+    return `${String(d.getUTCMonth()+1).padStart(2,'0')}/${String(d.getUTCDate()).padStart(2,'0')}/${String(d.getUTCFullYear()).slice(-2)}`;
+  }
+
+  function extractTime(val) {
+    const str = String(val);
+    const m = str.match(/(\d{1,2}):(\d{2}):(\d{2})\s*(AM|PM)?/i);
+    if (m) {
+      let h = parseInt(m[1]), mn = parseInt(m[2]), s = parseInt(m[3]);
+      const ap = (m[4]||'').toUpperCase();
+      if (ap === 'PM' && h !== 12) h += 12;
+      if (ap === 'AM' && h === 12) h = 0;
+      return `${String(h).padStart(2,'0')}:${String(mn).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+    if (typeof val === 'number') {
+      const t = Math.round(val * 86400);
+      return `${String(Math.floor(t/3600)).padStart(2,'0')}:${String(Math.floor((t%3600)/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
+    }
+    return str;
+  }
+
+  function transformCusip(val) {
+    let s = String(val).trim();
+    if (s.toUpperCase().startsWith('US')) s = s.slice(2);
+    if (s.length > 0) s = s.slice(0, -1);
+    return s;
+  }
+
+  // ── Modal ────────────────────────────────────────────────────────
+  function promptCompanyName() {
+    return new Promise(resolve => {
+      modalResolve = resolve;
+      document.getElementById('modalInput').value = '';
+      document.getElementById('modalOverlay').classList.add('open');
+      document.getElementById('modalInput').focus();
+    });
+  }
+
+  function resolveModal() {
+    const val = document.getElementById('modalInput').value.trim();
+    if (!val) return;
+    document.getElementById('modalOverlay').classList.remove('open');
+    if (modalResolve) { modalResolve(val); modalResolve = null; }
+  }
+
+  document.getElementById('modalInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') resolveModal();
+  });
+
+  function setStatus(msg, type = '') {
+    const el = document.getElementById('statusMsg');
+    el.textContent = msg;
+    el.className = 'status-msg' + (type ? ' ' + type : '');
+  }
+
+  // ── Process ──────────────────────────────────────────────────────
+  async function processFile() {
+    if (!ctmWB) { setStatus('Please load the DTCC CTM file first.', 'error'); return; }
+    if (acctSet.size === 0) { setStatus('Please load the Accounts reference first.', 'error'); return; }
+    setStatus('Processing...');
+    document.getElementById('btnDownload').style.display = 'none';
+    outputBuffer = null;
+
+    try {
+      const sheetName = ctmWB.SheetNames.find(n => n.toUpperCase().includes('DTCC') || n.toUpperCase().includes('CTM'))
+                        || ctmWB.SheetNames[0];
+      const ws = ctmWB.Sheets[sheetName];
+
+      const timeRaw       = cellVal(ws, 1, 0);
+      const tradingAcct   = String(cellVal(ws, 2, 0)).trim();
+      const secCode       = cellVal(ws, 5, 6);
+      const bs            = cellVal(ws, 5, 8);
+      const price         = cellVal(ws, 5, 11);
+      const settleDateRaw = cellVal(ws, 5, 15);
+      const tradeDateRaw  = cellVal(ws, 5, 16);
+
+      const time      = extractTime(timeRaw);
+      const tradeDate = excelDateToMDY(tradeDateRaw);
+      const settlDate = excelDateToMDY(settleDateRaw);
+      const cusip     = transformCusip(secCode);
+
+      const companyName = await promptCompanyName();
+
+      // Find allocation header
+      const allRows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+      let allocHeaderIdx = -1, acctIdCol = -1, qtyAllocCol = -1, accIntCol = -1;
+      for (let r = 0; r < allRows.length; r++) {
+        const idx = allRows[r].findIndex(v => String(v).trim() === 'Acct ID');
+        if (idx !== -1) {
+          allocHeaderIdx = r;
+          acctIdCol   = idx;
+          qtyAllocCol = allRows[r].findIndex(v => String(v).trim() === 'Qty Alloc');
+          accIntCol   = allRows[r].findIndex(v => String(v).trim() === 'Accrued Interest');
+          break;
+        }
+      }
+      if (allocHeaderIdx === -1) { setStatus('Allocation section not found.', 'error'); return; }
+
+      const dataRows = [];
+      for (let r = allocHeaderIdx + 1; r < allRows.length; r++) {
+        const row = allRows[r];
+        if (String(row[0]).trim().toLowerCase() === 'my side') {
+          const acctId = String(row[acctIdCol]).trim();
+          const qty    = (parseFloat(row[qtyAllocCol]) || 0) / 1000;
+          const accInt = accIntCol !== -1 ? row[accIntCol] : '';
+          if (acctId) dataRows.push({
+            otherAcct: companyName + '_' + acctId,
+            qty, accInt
+          });
+        }
+      }
+      if (dataRows.length === 0) { setStatus('No "My Side" allocation rows found.', 'error'); return; }
+
+      // ── Build Excel with ExcelJS ──────────────────────────────────
+      const exWB = new ExcelJS.Workbook();
+      const exWS = exWB.addWorksheet('FI Output');
+
+      // Header row
+      exWS.addRow(OUTPUT_COLS);
+
+      // Data rows
+      let totalQty = 0;
+      for (const d of dataRows) {
+        const principal = parseFloat((d.qty * (parseFloat(price) || 0)).toFixed(2));
+        totalQty += d.qty;
+
+        const row = exWS.addRow([
+          tradeDate, time, settlDate, 'FAC-' + tradingAcct,
+          d.otherAcct, cusip, bs, d.qty,
+          principal, d.accInt, price, 'No'
+        ]);
+
+        // Red fill if Other Acct not in Accts col A
+        if (!acctSet.has(d.otherAcct)) {
+          const cell = row.getCell(OTHER_ACCT_COL_IDX + 1); // ExcelJS is 1-indexed
+          cell.fill = {
+            type: 'pattern', pattern: 'solid',
+            fgColor: { argb: 'FFFF0000' }
+          };
+        }
+      }
+
+      // Total row — qty only
+      const totalRow = exWS.addRow(
+        OUTPUT_COLS.map((_, i) => i === QTY_COL_IDX ? parseFloat(totalQty.toFixed(3)) : '')
+      );
+      totalRow.getCell(QTY_COL_IDX + 1).font = { bold: true };
+
+      outputBuffer = await exWB.xlsx.writeBuffer();
+
+      setStatus(`Done — ${dataRows.length} row(s) ready.`, 'ok');
+      document.getElementById('btnDownload').style.display = 'inline-block';
+
+    } catch(err) {
+      setStatus('Error: ' + err.message, 'error');
+      console.error(err);
+    }
+  }
+
+  function downloadOutput() {
+    if (!outputBuffer) return;
+    const blob = new Blob([outputBuffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'FI_Output.xlsx';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+</script>
+
+</body>
+</html>
