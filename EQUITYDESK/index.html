@@ -536,16 +536,16 @@ const csvText = ``;
 
 /* ── Parity Advantage Data ── */
 const parityData = [
-  { symbol: 'BBD',  yesterday: 151243, avg: 92471  },
-  { symbol: 'ABEV', yesterday: 101335, avg: 79831  },
-  { symbol: 'LYG',  yesterday: 81825,  avg: 85303  },
-  { symbol: 'WIT',  yesterday: 59134,  avg: 51493  },
-  { symbol: 'GGB',  yesterday: 47135,  avg: 69393  },
-  { symbol: 'ITUB', yesterday: 41309,  avg: 44016  },
-  { symbol: 'SID',  yesterday: 36975,  avg: 36849  },
-  { symbol: 'CIG',  yesterday: 30244,  avg: 37513  },
-  { symbol: 'NIO',  yesterday: 19226,  avg: 17851  },
-  { symbol: 'MFG',  yesterday: 19149,  avg: 22192  }
+  { symbol: 'BBD',  tape: 'A', yesterday: 151243, avg: 92471  },
+  { symbol: 'ABEV', tape: 'A', yesterday: 101335, avg: 79831  },
+  { symbol: 'LYG',  tape: 'A', yesterday: 81825,  avg: 85303  },
+  { symbol: 'WIT',  tape: 'A', yesterday: 59134,  avg: 51493  },
+  { symbol: 'GGB',  tape: 'A', yesterday: 47135,  avg: 69393  },
+  { symbol: 'ITUB', tape: 'A', yesterday: 41309,  avg: 44016  },
+  { symbol: 'SID',  tape: 'A', yesterday: 36975,  avg: 36849  },
+  { symbol: 'CIG',  tape: 'A', yesterday: 30244,  avg: 37513  },
+  { symbol: 'NIO',  tape: 'A', yesterday: 19226,  avg: 17851  },
+  { symbol: 'MFG',  tape: 'A', yesterday: 19149,  avg: 22192  }
 ];
 
 /* ── Tab switching ── */
@@ -954,13 +954,9 @@ const compareSets = {
 
 function renderComparison(key) {
   const set = compareSets[key];
+  // Use uploaded data if available, otherwise just use companyLookup
   const adrLookup = {};
   data.forEach(r => { adrLookup[r.symbol] = r; });
-
-  const matched = set.data.filter(r => {
-    const sym = r.symbol.replace(' PRC', '-C').replace(' ', '-');
-    return adrLookup[sym] || adrLookup[r.symbol];
-  });
 
   const thead = document.getElementById('compare-thead');
   thead.innerHTML = `<tr>
@@ -981,7 +977,11 @@ function renderComparison(key) {
   tbody.innerHTML = set.data.map((r, i) => {
     const sym = r.symbol.replace(' PRC', '-C').replace(' ', '-');
     const adr = adrLookup[sym] || adrLookup[r.symbol] || {};
-    const flag = countryFlags[adr.country] || '';
+    // Fall back to companyLookup if no uploaded ADR data
+    const lookup = companyLookup[sym] || companyLookup[r.symbol] || {};
+    const name = adr.name || lookup.name || '';
+    const country = adr.country || lookup.country || '';
+    const flag = countryFlags[country] || '';
 
     let yDisplay, aDisplay, changeStr, changeClass;
     if (set.isPercent) {
@@ -1006,9 +1006,9 @@ function renderComparison(key) {
     return `<tr>
       <td class="rank">${i + 1}</td>
       <td class="symbol">${r.symbol}</td>
-      <td class="name" title="${adr.name || ''}">${adr.name || '—'}</td>
-      <td class="country"><span class="flag">${flag}</span>${adr.country || '—'}</td>
-      <td style="color:#888;font-size:12px;">${r.tape}</td>
+      <td class="name" title="${name}">${name || '—'}</td>
+      <td class="country"><span class="flag">${flag}</span>${country || '—'}</td>
+      <td style="color:#888;font-size:12px;">${r.tape || 'A'}</td>
       <td class="num">${adr.monthly ? fmt(adr.monthly) : '—'}</td>
       <td class="num">${adr.nyse ? fmt(adr.nyse) : '—'}</td>
       <td class="pct">${adr.nyse_pct ? adr.nyse_pct.toFixed(2) + '%' : '—'}</td>
