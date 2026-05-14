@@ -388,6 +388,16 @@
     a.download = 'FI_Output.xlsx';
     a.click();
     URL.revokeObjectURL(a.href);
+
+    // Reset for next run
+    setTimeout(() => {
+      ctmWB = null;
+      outputBuffer = null;
+      document.getElementById('ctmInput').value = '';
+      document.getElementById('ctmStatus').style.display = 'none';
+      document.getElementById('btnDownload').style.display = 'none';
+      setStatus('');
+    }, 1000);
   }
 </script>
 
